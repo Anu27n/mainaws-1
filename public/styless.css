@@ -1,0 +1,57 @@
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 17px;
+    background-color: #bc9868;
+}
+body{
+    background-color: #d5ba98;
+}
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    resize: none;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Hide message div by default */
+.container div {
+    display: none;
+}
+
+/* Show message div when showMessage is true */
+.container div.ng-show {
+    display: block;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Message styles based on success or error */
+.container div.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.container div.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

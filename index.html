@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="styles.css" rel="stylesheet">
+    <script>
+        function validateEmail(event) {
+        const emailInput = document.querySelector('.w input[type="email"]');
+        const email = emailInput.value.trim();
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            emailInput.focus();
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+    const registerButton = document.querySelector('.w button');
+    registerButton.addEventListener('click', (event) => {
+        if (!validateEmail(event)) {
+            event.stopPropagation();
+        }
+    });function openTab() {
+    window.open("https://www.index2.html/", "_blank");
+    }
+        </script>
+        
+</head>
+<body>
+    <section id="s1">
+    <div class="one">
+        <div class="a"><a href="#s2" class="gg">About Us</a></div>
+        <div class="b"><a href="#s3" class="gg">FAQs</a></div>
+        <div class="c"><a href="#s4" class="gg">Contact</a></div>
+    </div>
+    <div class="two">
+        <p class="x">DoubtsOnli</p>
+        <p class="y">Unravel the mysteries of learning, one question at a time, on a platform that connects curious minds worldwide.</p>
+    </div>
+    <div class="three">
+       <form action="/submitEmail" method='post'>
+        <div class="w"><input type="email" name="email" placeholder="Enter your mail id" required><a href="hom.html"><button id="email"  type="submit" value="Register Now" onclick="return validateEmail(event)" >Register Now</button></a></div>   
+    </form>
+    </div>
+    <img class="ee" src="https://i.postimg.cc/05MRnKMq/b1.png" alt="study">
+</section>
+<br><br><br><br><br><br>
+<section id="s2">
+    <div class="k">
+        <div class="kk">
+            <p class="k1">About Us</p>
+            <div class="k3">
+                <p class="k2">Welcome to <b>DoubtsOnli</b>, your go-to destination for collaborative doubt-solving and knowledge sharing! <br><br>Our platform was born out of a passion for learning and a belief in the power of community-driven education. We understand that everyone encounters questions and challenges along their learning journey, and we're here to provide a space where individuals from around the globe can come together to help each other grow and succeed.</p>
+            </div>
+            
+            
+        
+        </div>
+        
+    </div>
+    
+</section>
+
+<section id="s3">
+    <div class="w1">
+        <p class="w2">FAQs</p>
+        <div class="w3">
+            <p><b>Ques</b> What types of questions can be asked on DoubtsOnli? </p>
+            <p><b>Ans</b> Users can ask questions on a wide range of topics, including but 
+                not limited to academics, science, technology, arts, and 
+                humanities. DoubtsOnli aims to provide a platform for seeking 
+                clarification on any subject matter.</p>
+            <p>-----------------------------------------------------------------------------------------------------------------------</p>
+            <p><b>Ques</b> Is there any cost associated with using DoubtsOnli?</p>
+            <p><b>Ans</b> No, DoubtsOnli is a free-to-use platform for both asking 
+                questions and providing answers. There are no subscription fees 
+                or charges for accessing its features.
+                </p>
+            <p>-----------------------------------------------------------------------------------------------------------------------</p>
+            <p><b>Ques</b> Can users contribute answers on DoubtsOnli?</p>
+            <p><b>Ans</b> Yes, users are encouraged to contribute answers to questions 
+                posted on DoubtsOnli. By sharing their knowledge and expertise, 
+                users can help address the doubts and queries of others within 
+                the community.</p>
+            <p>-----------------------------------------------------------------------------------------------------------------------</p>
+            <p><b>Ques</b> How can users provide feedback or report issues on
+                DoubtsOnli?</p>
+            <p><b>Ans</b> Users can provide feedback, report issues, or contact the site 
+                administrators through designated channels such as a contact 
+                form or support email address. DoubtsOnli values user input and 
+                aims to address concerns promptly.
+                </p>
+        </div>
+       
+    </div>
+        
+</section>
+   <br><br> 
+<section id="s4">
+    <div class="z">
+        <p class="z1">Contact Details</p>
+        <div class="po">
+        <pre class="z2">Sameer Mahindru       22BIT0531</pre>
+        <pre class="z4">Hardik Pareek           22BIT0567</pre>
+        <pre class="z5">Aryan Singh Bisht     22BIT0252</pre>
+        </div>
+        <button><a href="contact.html">Contact Us</a></button>
+        
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </section>
+    <div class="pli"><p class="plo"><b>© Copyright, DoubtsOnli</b></p></div>
+    
+  </body>
+</html>

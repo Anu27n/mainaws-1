@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answers</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .answer-container {
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .answer {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Answers</h1>
+    <div id="answerList" class="answer-container"></div>
+
+    <script>
+        // Fetch and display answers from the server
+        async function fetchAnswers() {
+            try {
+                const response = await fetch('/answers');
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok (${response.status} ${response.statusText})`);
+                }
+                const answers = await response.json();
+                return answers;
+            } catch (err) {
+                console.error('Error fetching answers:', err);
+                return [];
+            }
+        }
+
+        async function displayAnswers() {
+            try {
+                const answers = await fetchAnswers();
+                const answerListElement = document.getElementById("answerList");
+
+                // Clear previous content
+                answerListElement.innerHTML = "";
+
+                // Display fetched answers
+                answers.forEach(answer => {
+                    const answerDiv = document.createElement("div");
+                    answerDiv.classList.add("answer");
+                    answerDiv.textContent = answer.answer;
+                    answerListElement.appendChild(answerDiv);
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Call the displayAnswers function to fetch and display answers
+        displayAnswers();
+    </script>
+</body>
+</html>

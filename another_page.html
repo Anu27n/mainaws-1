@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask a Question</title>
+    <link href="styles1.css" rel="stylesheet">
+    <style>
+        .u{
+            margin-left: 43%;
+            height: 50px;
+            width: 150px;
+            border-radius: 10px;
+            margin-top: 7%;
+            background-color: #d5ba98;
+        }
+        button{
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- New section for asking questions -->
+        <section id="s5">
+            <h2 style="margin-top: 6%;">Got a Question? Ask Us!</h2>
+            <!-- Updated form with id="question-form" and onsubmit="submitQuestion(event)" -->
+            <form id="question-form" onsubmit="submitQuestion(event)" action="/submitQuestion" method="post">
+                <div>
+                    <label for="question">Your Question:</label>
+                    <textarea id="question" name="question" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit">Submit Question</button>
+            </form>
+        </section>
+
+        <!-- Container to display questions -->
+       
+    </div>
+    <script src="script.js" type="text/javascript"></script>
+    <a href="/answers.html"><input type="submit" value ="Answers" class="u"></a>
+    
+</body>
+</html>

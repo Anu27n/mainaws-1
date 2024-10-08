@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #bc9868;
+        }
+
+        .question {
+            background-color: #a18167;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #5C4033;
+            color: white;
+            border-radius: 10px;
+            height: 30px;
+            width: 100px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        async function fetchQuestions() {
+            try {
+                const response = await fetch('http://localhost:8080/questions'); // Replace with your server endpoint
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const questions = await response.json();
+                return questions;
+            } catch (err) {
+                console.error(err);
+                return [];
+            }
+        }
+
+        async function displayQuestions() {
+            try {
+                const questions = await fetchQuestions();
+                const questionListElement = document.getElementById("questionList");
+
+                // Clear previous content
+                questionListElement.innerHTML = "";
+
+                // Display fetched questions
+                questions.forEach(question => {
+                    const questionDiv = document.createElement("div");
+                    questionDiv.classList.add("question");
+
+                    const questionText = document.createElement("p");
+                    questionText.textContent = question.question;
+                    questionDiv.appendChild(questionText);
+
+                    const answerInput = document.createElement("input");
+                    answerInput.type = "text";
+                    answerInput.placeholder = "Write your answer here";
+                    answerInput.name="answer";
+                    questionDiv.appendChild(answerInput);
+
+                    const submitButton = document.createElement("input");
+                    submitButton.type = "submit";
+                    submitButton.value = "Submit";
+                    submitButton.addEventListener("click", async () => {
+                        const answer = answerInput.value.trim();
+                        if (answer) {
+                            await submitAnswer(question._id, answer); // Assuming question._id is the unique identifier
+                            alert("Answer submitted successfully!");
+                            answerInput.value = ""; // Clear the input after submission
+                        } else {
+                            alert("Please enter your answer.");
+                        }
+                    });
+                    questionDiv.appendChild(submitButton);
+
+                    questionListElement.appendChild(questionDiv);
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function submitAnswer(questionId, answer) {
+            try {
+                const response = await fetch('/submitAnswer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ questionId, answer })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log('Response from server:', data); // Log the server response for debugging
+            } catch (err) {
+                console.error('Error submitting answer:', err);
+            }
+        }
+
+        // Call the displayQuestions function to fetch and display questions
+        displayQuestions();
+    </script>
+</head>
+<body>
+
+<div id="questionList"></div> <!-- Placeholder for displaying fetched questions -->
+<a href="/answers.html"><input type="submit" value ="Answers" ></a>
+</body>
+</html>
