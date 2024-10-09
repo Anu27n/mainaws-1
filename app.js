@@ -29,7 +29,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        secure: false, // Set secure to true if using HTTPS
+        secure: true, // Set secure to true if using HTTPS
         maxAge: 10 * 60 * 1000 // 10 minutes in milliseconds
     }
 }));
