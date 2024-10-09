@@ -9,13 +9,14 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const { v4: uuidv4 } = require('uuid'); // For generating unique IDs
 
-// Initialize AWS DynamoDB client
+// Initialize AWS SDK and clients
 AWS.config.update({
     region: process.env.AWS_REGION,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const sns = new AWS.SNS(); // Initialize SNS client
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -84,6 +85,21 @@ async function insertIntoDynamoDB(tableName, primaryKey, data) {
     }
 }
 
+// Function to publish a message to an SNS topic
+async function publishToSns(message) {
+    const params = {
+        Message: message,
+        TopicArn: process.env.SNS_TOPIC_ARN // Set your SNS Topic ARN in your environment variables
+    };
+
+    try {
+        await sns.publish(params).promise();
+        console.log("Message published to SNS:", message);
+    } catch (err) {
+        console.error("Error publishing message to SNS:", err);
+    }
+}
+
 // Route to handle GET requests for fetching questions
 app.get("/questions", async function(req, res) {
     try {
@@ -114,6 +130,10 @@ app.post("/submitQuery", async function(req, res) {
         // Insert the query into the "queries" table in DynamoDB with "queryid" as the primary key
         await insertIntoDynamoDB("Queries", "queryid", { name, email, query });
         console.log("Query inserted into 'queries' table successfully:", query);
+        
+        // Publish a notification to SNS
+        await publishToSns(`New query submitted by ${name}: ${query}`);
+        
         res.redirect("/"); // Redirect after successful submission
     } catch (err) {
         console.error("Error inserting query into 'queries' table:", err);
@@ -129,6 +149,10 @@ app.post("/submitQuestion", async function(req, res) {
         // Insert the question into the "questions" table in DynamoDB with "questionid" as the primary key
         await insertIntoDynamoDB("Questions", "questionid", { question: question });
         console.log("Question inserted into 'questions' table successfully:", question);
+        
+        // Optionally publish a notification to SNS
+        await publishToSns(`New question submitted: ${question}`);
+        
         res.redirect("/nn.html"); // Redirect after successful submission
     } catch (err) {
         console.error("Error inserting question into 'questions' table:", err);
@@ -145,6 +169,10 @@ app.post("/submitEmail", async function(req, res) {
         // Insert the email into the "emails" table in DynamoDB with "emailid" as the primary key
         await insertIntoDynamoDB("Emails", "emailid", { email: email });
         console.log("Email inserted into 'emails' table successfully:", email);
+        
+        // Publish a notification to SNS
+        await publishToSns(`New email submitted: ${email}`);
+        
         res.redirect("/about"); // Redirect after email submission
     } catch (err) {
         console.error("Error inserting email into 'emails' table:", err);
@@ -160,6 +188,10 @@ app.post("/submitAnswer", async function(req, res) {
         // Insert the answer into the "answers" table in DynamoDB with "answerid" as the primary key
         await insertIntoDynamoDB("Answers", "answerid", { answer: answer });
         console.log("Answer inserted into 'answers' table successfully:", answer);
+        
+        // Optionally publish a notification to SNS
+        await publishToSns(`New answer submitted: ${answer}`);
+        
         res.redirect("/"); // Redirect after successful submission
     } catch (err) {
         console.error("Error inserting answer into 'answers' table:", err);
@@ -198,6 +230,6 @@ app.get("/contact.html", function(req, res) {
 });
 
 // Start the server
-app.listen(8080,'0.0.0.0', function() {
+app.listen(8080, '0.0.0.0', function() {
     console.log("Server listening on port 8080");
 });
