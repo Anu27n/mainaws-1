@@ -8,7 +8,7 @@
 <body ng-controller="ContactController as ctrl">
     <div class="container">
         <h1>Contact Us</h1>
-        <form ng-submit="ctrl.submitForm()" method="post" action="http://13.232.76.55:8080/submitQuery">
+        <form ng-submit="ctrl.submitForm()" method="post" action="http://13.233.156.4:8080/submitQuery">
             <input type="text" ng-model="ctrl.formData.name" placeholder="Your Name" required name="name"><br>
             <input type="email" ng-model="ctrl.formData.email" placeholder="Your Email" required name="email"><br>
             <textarea ng-model="ctrl.formData.query" placeholder="Your Message" required name="query"></textarea><br>
