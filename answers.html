@@ -30,7 +30,7 @@
         // Fetch and display answers from the server
         async function fetchAnswers() {
             try {
-                const response = await fetch('http://13.233.156.4:8080/answers');
+                const response = await fetch('/answers');
                 if (!response.ok) {
                     throw new Error(`Network response was not ok (${response.status} ${response.statusText})`);
                 }
