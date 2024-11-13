@@ -230,6 +230,6 @@ app.get("/contact.html", function(req, res) {
 });
 
 // Start the server
-app.listen(8080, '0.0.0.0', function() {
+app.listen(8080, function() {
     console.log("Server listening on port 8080");
 });
